@@ -289,7 +289,7 @@ async def bt_cls(b, cb):
     type_ = cb.matches[0].group(1)
     cb.message.chat.id
     if type_ == "closed":
-        await cb.answer("CLOSE")
+        await cb.answer("closed menu.")
         await cb.message.delete()
 
 @Client.on_callback_query(
@@ -627,7 +627,7 @@ async def play(_, message: Message):
             )
      
             await message.reply_photo(
-                photo="https://telegra.ph/file/ceb2e3ff767959ef5addb.jpg",
+                photo="https://telegra.ph/file/8d2d2b3c0b6bd9fc3409e.jpg",
                 caption=toxxt, reply_markup=koyboard, 
             )
             await lel.delete()
