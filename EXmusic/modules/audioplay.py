@@ -5,79 +5,71 @@
 from os import path
 
 from pyrogram import Client
-from pyrogram.types import Message, Voice
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from EXmusic.services.callsmusic import callsmusic, queues
 
-from EXmusic.services.converter import converter
-from EXmusic.services.downloaders import youtube
+import converter
+from downloaders import youtube
 
-from EXmusic.config import BOT_NAME as bn, DURATION_LIMIT, UPDATES_CHANNEL,SUPPORT_GROUP
+from EXmusic.config import DURATION_LIMIT
+from EXmusic.modules.play import convert_seconds
 from EXmusic.helpers.filters import command, other_filters
-from EXmusic.helpers.decorators import errors
-from EXmusic.helpers.errors import DurationLimitError
 from EXmusic.helpers.gets import get_url, get_file_name
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
 
 @Client.on_message(command("stream") & other_filters)
-@errors
 async def stream(_, message: Message):
 
-    lel = await message.reply("🔁 **Processing** sound...")
-    sender_id = message.from_user.id
-    sender_name = message.from_user.first_name
+    lel = await message.reply("🔁 **processing..**")
+    costumer = message.from_user.mention
 
     keyboard = InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        text="Support",
-                        url=f"https://t.me/EXGroupSupport"),
+                        text="ɢʀᴏᴜᴘ",
+                        url=f"https://t.me/EXSupportGroup"),
                     InlineKeyboardButton(
-                        text="Updates",
-                        url=f"https://t.me/EXProjects"),
-                ],
-                [
-                    InlineKeyboardButton(
-                        text="Created by",
-                        url=f"https://t.me/rizexx")
+                        text="ᴄʜᴀɴɴᴇʟ",
+                        url=f"https://t.me/EXProjects")
                 ]
             ]
         )
 
-    audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
+    audio = message.reply_to_message.audio if message.reply_to_message else None
     url = get_url(message)
 
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
-            raise DurationLimitError(
-                f"❌ Videos longer than {DURATION_LIMIT} minute(s) aren't allowed to play!"
-            )
+            return await lel.edit(f"❌ **music with duration more than** `{DURATION_LIMIT}` **minutes, can't play !**")
 
         file_name = get_file_name(audio)
+        title = audio.title
+        duration = convert_seconds(audio.duration)
         file_path = await converter.convert(
             (await message.reply_to_message.download(file_name))
             if not path.isfile(path.join("downloads", file_name)) else file_name
         )
     elif url:
-        file_path = await converter.convert(youtube.download(url))
+        return
     else:
-        return await lel.edit_text("you did not give me audio file or yt link to stream!")
+        return await lel.edit("❗ you did not give me audio file or yt link to stream !")
 
     if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await queues.put(message.chat.id, file=file_path)
-        costumer = message.from_user.mention
         await message.reply_photo(
-        photo=f"https://telegra.ph/file/06128b8298df70f2d3c5f.jpg",
-        reply_markup=keyboard,
-        caption=f"💡 **Track added to the queue**\n\n🎧 **Request by**: {costumer}\n🔢 **Track position**: » `{position}` «")
+            photo=f"{QUE_IMG}",
+            caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {costumer}",
+            reply_markup=keyboard,
+        )
         return await lel.delete()
     else:
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
-        costumer = message.from_user.mention
         await message.reply_photo(
-        photo=f"https://telegra.ph/file/06128b8298df70f2d3c5f.jpg",
-        reply_markup=keyboard,
-        caption=f"💡 **Status**: **Playing**\n\n🎧 **Request by**: {costumer}\n🎛️ **Powered** by EX Music bot"
+            photo=f"{AUD_IMG}",
+            caption=f"🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
+                   +f"🎧 **Request by:** {costumer}",
+            reply_markup=keyboard,
         )
         return await lel.delete()
