@@ -92,16 +92,16 @@ async def alive(client: Client, message: Message):
     uptime_sec = (current_time - START_TIME).total_seconds()
     uptime = await _human_time_duration(int(uptime_sec))
     await message.reply_photo(
-        photo=f"https://telegra.ph/file/caabb857dab098c5fc372.jpg",
-        caption=f"""🔵 Holla I'am **[{BOT_NAME}](https://t.me/{BOT_USERNAME})**
+        photo=f"https://telegra.ph/file/a105f2f1fabe8acd2b8b5.jpg",
+        caption=f"""🔴 Holla I'am **[{BOT_NAME}](https://t.me/{BOT_USERNAME})**
 
-🔵 I'm Working **Properly**
+🔴 I'm Working **Properly**
 
-🔵 Bot : **6.5 LATEST**
+🔴 Bot : **6.5 LATEST**
 
-🔵 My Master : [EX](https://t.me/rizexx)
+🔴 My Master : [EX](https://t.me/rizexx)
 
-🔵 Python version : 3.9.7
+🔴 Python version : 3.9.7
 
 **Thanks For Using Me ♡**""",
         reply_markup=InlineKeyboardMarkup(
