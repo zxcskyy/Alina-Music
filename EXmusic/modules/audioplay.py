@@ -58,7 +58,7 @@ async def stream(_, message: Message):
 
     if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await queues.put(message.chat.id, file=file_path)
-        await b.send_photo(message.chat.id,
+        await message.reply_photo(
             photo=f"https://telegra.ph/file/e8fc00f06d6c4f2739f44.jpg",
             caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {costumer}",
             reply_markup=keyboard,
@@ -66,7 +66,7 @@ async def stream(_, message: Message):
         return await lel.delete()
     else:
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
-        await b.send_photo(message.chat.id,
+        await message.reply_photo(
             photo=f"https://telegra.ph/file/e8fc00f06d6c4f2739f44.jpg",
             caption=f"🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
                    +f"🎧 **Request by:** {costumer}",
