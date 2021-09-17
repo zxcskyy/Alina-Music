@@ -33,7 +33,7 @@ async def pmPermit(client: USER, message: Message):
                 return
             await USER.send_message(
                 message.chat.id,
-            f"👋 Hello, I'm a music assistant service from EX.\n\nSupport Group : @EXGroupSupport",
+            f"**Hello** I'm Alina's music assistant, If Alina has a bug, you can report it to the **Support Group**\n\n**Support Group - @EXSupportGroup",
             )
             return
 
