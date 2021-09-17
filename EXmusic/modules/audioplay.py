@@ -9,7 +9,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from EXmusic.services.callsmusic import callsmusic, queues
 
-import EXmusic.services.converter import converter
+from EXmusic.services.converter import converter
 from EXmusic.services.downloaders import youtube
 
 from EXmusic.config import DURATION_LIMIT
