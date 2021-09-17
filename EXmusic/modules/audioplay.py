@@ -9,8 +9,8 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from EXmusic.services.callsmusic import callsmusic, queues
 
-import converter
-from downloaders import youtube
+import EXmusic.services.converter import converter
+from EXmusic.services.downloaders import youtube
 
 from EXmusic.config import DURATION_LIMIT
 from EXmusic.modules.play import convert_seconds
@@ -59,7 +59,7 @@ async def stream(_, message: Message):
     if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await queues.put(message.chat.id, file=file_path)
         await message.reply_photo(
-            photo=f"{QUE_IMG}",
+            photo=f"https://telegra.ph/file/0f6f8a8a5ad69fe5ecf3d.png",
             caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {costumer}",
             reply_markup=keyboard,
         )
@@ -67,7 +67,7 @@ async def stream(_, message: Message):
     else:
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
         await message.reply_photo(
-            photo=f"{AUD_IMG}",
+            photo=f"https://telegra.ph/file/0f6f8a8a5ad69fe5ecf3d.png",
             caption=f"🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
                    +f"🎧 **Request by:** {costumer}",
             reply_markup=keyboard,
