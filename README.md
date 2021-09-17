@@ -1,6 +1,6 @@
 <h1 align="centre">Alina Music</h1>
 
-### Repo for bots that can play songs in group voice chat telegram
+### This is just a music repo for telegram bot manager Alina Robot
 #### POWERED BY [PYTGCALLS](https://github.com/pytgcalls/pytgcalls)
 ### Found on telegram [Alina Robot](https://t.me/AlinaexRobot)
 
