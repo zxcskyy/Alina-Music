@@ -1,10 +1,10 @@
 {
-  "name": "-EXMusic",
+  "name": "Alina-Music",
   "description": "Repo for telegram bot, can play songs on vcg. Powered by PyTgCalls.",
   "keywords": ["music", "voicechat", "telegram"],
-  "repository": "https://github.com/rizkyoye/EXMusic",
+  "repository": "https://github.com/riz-ex/Alina-Music",
   "stack": "container",
-  "logo": "https://telegra.ph/file/708896ed251f0a3a6cfeb.jpg",
+  "logo": "https://telegra.ph/file/9dc166cbf30f50ffd9f7f.jpg",
   "buildpacks": [
    {
      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
