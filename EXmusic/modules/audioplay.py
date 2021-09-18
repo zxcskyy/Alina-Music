@@ -21,7 +21,7 @@ from EXmusic.helpers.gets import get_url, get_file_name
 @Client.on_message(command("stream") & other_filters)
 async def stream(_, message: Message):
 
-    lel = await send.message_text("🔁 **processing..**")
+    lel = await message_text("🔁 **processing..**")
     costumer = message.from_user.mention
 
     keyboard = InlineKeyboardMarkup(
