@@ -16,6 +16,7 @@ from EXmusic.config import DURATION_LIMIT
 from EXmusic.modules.play import convert_seconds
 from EXmusic.helpers.filters import command, other_filters
 from EXmusic.helpers.gets import get_url, get_file_name
+from EXmusic.helpers.channelmusic import get_chat_id
 
 
 @Client.on_message(command("stream") & other_filters)
