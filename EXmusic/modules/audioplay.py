@@ -19,9 +19,9 @@ from EXmusic.helpers.gets import get_url, get_file_name
 
 
 @Client.on_message(command("stream") & other_filters)
-async def stream(client, message):
+async def stream(_, message: Message):
 
-    lel = await client.send_message("🔁 **processing..**")
+    lel = await message.reply_text("🔁 **processing..**")
     costumer = message.from_user.mention
 
     keyboard = InlineKeyboardMarkup(
@@ -56,19 +56,19 @@ async def stream(client, message):
     else:
         return await lel.edit("❗ you did not give me audio file or yt link to stream !")
 
-    if message.chat.id in callsmusic.pytgcalls.active_calls:
-        position = await queues.put(message.chat.id, file=file_path)
-        await message.reply_photo(
+    if chat_id in callsmusic.pytgcalls.active_calls:
+        position = await queues.put(chat_id, file=file_path)
+        await b.send_photo(chat_id
             photo=f"https://telegra.ph/file/e8fc00f06d6c4f2739f44.jpg",
-            caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {costumer}",
+            caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** [{title}](file_name)\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {costumer}",
             reply_markup=keyboard,
         )
         return await lel.delete()
     else:
-        callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
-        await message.reply_photo(
+        callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        await b.send_photo(chat_id,
             photo=f"https://telegra.ph/file/e8fc00f06d6c4f2739f44.jpg",
-            caption=f"🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
+            caption=f"🏷 **Name:** [{title}](file_name)\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
                    +f"🎧 **Request by:** {costumer}",
             reply_markup=keyboard,
         )
