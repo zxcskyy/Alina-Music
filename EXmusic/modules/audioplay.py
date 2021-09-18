@@ -28,10 +28,10 @@ async def stream(_, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text="ɢʀᴏᴜᴘ",
+                        text="• ɢʀᴏᴜᴘ",
                         url=f"https://t.me/EXSupportGroup"),
                     InlineKeyboardButton(
-                        text="ᴄʜᴀɴɴᴇʟ",
+                        text="ᴄʜᴀɴɴᴇʟ •",
                         url=f"https://t.me/EXProjects")
                 ]
             ]
