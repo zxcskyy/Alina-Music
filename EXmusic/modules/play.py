@@ -440,7 +440,7 @@ async def play(_, message: Message):
     global useer
     if message.chat.id in DISABLED_GROUPS:
         return    
-    lel = await message.reply("🔁 **__Processing...__**")
+    lel = await message.reply("🔁 **Processing...**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
@@ -634,7 +634,7 @@ async def play(_, message: Message):
             return
             # Returning to pornhub
         except:
-            await lel.edit("🤖 **There are not enough results to choose from, start playing right away.**")
+            #await lel.edit("🤖 **There are not enough results to choose from, start playing right away.**")
                         
             # print(results)
             try:
@@ -650,7 +650,7 @@ async def play(_, message: Message):
 
             except Exception as e:
                 await lel.edit(
-                "❎ **Song not found!** Try searching with the correct title\n**Example** » /play desahan mia khalifa\n\n💡 **Subs Channel** : @EXProjects"
+                "❌ **Song not found!** please enter the correct song title."
             )
                 print(str(e))
                 return
