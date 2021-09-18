@@ -54,11 +54,11 @@ async def stream(_, message: Message):
     elif url:
         return
     else:
-        return await lel.edit("❗ you did not give me audio file or yt link to stream !")
+        return await lel.edit("❗ you did not give me audio file or yt link to **stream!**")
 
     if message.chat.id in callsmusic.pytgcalls.active_calls:
         position = await queues.put(message.chat.id, file=file_path)
-        await message.send_photo(message.chat.id,
+        await message.reply_photo(message.chat.id,
             photo=f"https://telegra.ph/file/e8fc00f06d6c4f2739f44.jpg",
             caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** [{title}](file_name)\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {costumer}",
             reply_markup=keyboard,
@@ -66,7 +66,7 @@ async def stream(_, message: Message):
         return await lel.delete()
     else:
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
-        await message.send_photo(message.chat.id,
+        await message.reply_photo(message.chat.id,
             photo=f"https://telegra.ph/file/e8fc00f06d6c4f2739f44.jpg",
             caption=f"🏷 **Name:** [{title}](file_name)\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
                    +f"🎧 **Request by:** {costumer}",
