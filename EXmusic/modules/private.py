@@ -84,36 +84,3 @@ async def get_uptime(client: Client, message: Message):
             ]
         ),
     )
-
-
-@Client.on_message(filters.command(["alive", f"alive@{BOT_USERNAME}"]))
-async def alive(client: Client, message: Message):
-    current_time = datetime.utcnow()
-    uptime_sec = (current_time - START_TIME).total_seconds()
-    uptime = await _human_time_duration(int(uptime_sec))
-    await message.reply_photo(
-        photo=f"https://telegra.ph/file/a105f2f1fabe8acd2b8b5.jpg",
-        caption=f"""🔴 Holla I'am **[{BOT_NAME}](https://t.me/{BOT_USERNAME})**
-
-🔴 I'm Working **Properly**
-
-🔴 Bot : **6.5 LATEST**
-
-🔴 My Master : [EX](https://t.me/rizexx)
-
-🔴 Python version : 3.9.7
-
-**Thanks For Using Me ♡**""",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "🚨 Group", url=f"https://t.me/EXSupportGroup"
-                    ),
-                    InlineKeyboardButton(
-                        "📡 Channel", url=f"https://t.me/EXProjects"
-                    )
-                ]
-            ]
-        )
-    )
