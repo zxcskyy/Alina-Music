@@ -47,7 +47,7 @@ async def _human_time_duration(seconds):
     return ', '.join(parts)
 
 @Client.on_message(
-    filters.command(["reload", "reload@{BOT_USERNAME}"])
+    filters.command(["reload", f"reload@{BOT_USERNAME}"])
     & filters.group
     & ~ filters.edited
 )
