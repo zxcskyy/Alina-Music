@@ -27,7 +27,15 @@ async def pause(_, message: Message):
         await message.reply_text("❎ No song is playing!")
     else:
         callsmusic.pytgcalls.pause_stream(chat_id)
-        await message.reply_text("▶️ **Music paused!**\n\n• For resuming the song, use command » /resume")
+        await message.reply_text("▶️ **Music paused!**\n\n• For resuming the song, use command » /resume",
+        reply_markup=InlineKeyboardMarkup(
+            [
+               [
+                  InlineKeyboardButton("Resume", callback_data="playing"),
+               ]
+            ]
+         ),
+      )
 
 
 @Client.on_message(command("resume") & other_filters)
@@ -83,4 +91,4 @@ async def skip(_, message: Message):
         skip = qeue.pop(0)
     if not qeue:
         return
-    await message.reply_text(f"💡 **You jump to the next song queue..**\n\n• skipped : **{skip[0]}**\n• now playing : **{qeue[0][0]}**")
+    await message.reply_text(f"**You jump to the next song queue..**\n\n• skipped : **{skip[0]}**\n• now playing : **{qeue[0][0]}**")
