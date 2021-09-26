@@ -30,7 +30,7 @@ async def pause(_, message: Message):
         reply_markup=InlineKeyboardMarkup(
             [
                [
-                  InlineKeyboardButton("Resume »", callback_data="resume")
+                  InlineKeyboardButton("Resume »", callback_data="play")
                ]
             ]
          ),
