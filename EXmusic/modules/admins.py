@@ -10,7 +10,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from EXmusic.function.admins import admins
 from EXmusic.helpers.channelmusic import get_chat_id
 from EXmusic.helpers.decorators import authorized_users_only, errors
-from EXmusic.modules.play import cb_admin_check, resume
+from EXmusic.modules.play import cb_admin_check
 from EXmusic.helpers.filters import command, other_filters
 from EXmusic.services.callsmusic import callsmusic
 from EXmusic.services.callsmusic import queues
@@ -26,11 +26,11 @@ async def pause(_, message: Message):
         await message.reply_text("❎ No song is playing!")
     else:
         callsmusic.pytgcalls.pause_stream(chat_id)
-        await message.reply_text("▶️ **Music paused!**\n\n• For resuming the song, press the button below.",
+        await b.send_message("▶️ **Music paused!**\n\n• For resuming the song, press the button below.",
         reply_markup=InlineKeyboardMarkup(
             [
                [
-                  InlineKeyboardButton("Resume »", callback_data="resume")
+                  InlineKeyboardButton(text="Resume »", "resume")
                ]
             ]
          ),
