@@ -26,7 +26,7 @@ async def pause(_, message: Message):
         await message.reply_text("❎ No song is playing!")
     else:
         callsmusic.pytgcalls.pause_stream(chat_id)
-        await b.send_message("▶️ **Music paused!**\n\n• For resuming the song, press the button below.",
+        await client.send_message("▶️ **Music paused!**\n\n• For resuming the song, press the button below.",
         reply_markup=InlineKeyboardMarkup(
             [
                [
