@@ -103,7 +103,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-async def generate_cover(ctitle, title, views, duration, thumbnail):
+async def generate_cover(requested_by, title, views, duration, thumbnail, ctitle):
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
             if resp.status == 200:
