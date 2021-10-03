@@ -103,7 +103,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-async def generate_cover(requested_by, title, views, duration, thumbnail, ctitle):
+async def generate_cover(requested_by, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
             if resp.status == 200:
@@ -868,7 +868,7 @@ async def lol_cb(b, cb):
     if cb.from_user.id != useer_id:
         await cb.answer("you are not people who requested this song !", show_alert=True)
         return
-    await cb.message.edit("**Connecting to voice chat...**")
+    #await cb.message.edit("**Connecting to voice chat...**")
     x=int(x)
     try:
         useer_name = cb.message.reply_to_message.from_user.first_name
@@ -911,7 +911,7 @@ async def lol_cb(b, cb):
         ]
     )
     requested_by = useer_name
-    await generate_cover(requested_by, title, views, duration, thumbnail, ctitle)
+    await generate_cover(requested_by, title, views, duration, thumbnail)
     file_path = await convert(youtube.download(url))  
     if chat_id in callsmusic.pytgcalls.active_calls:
         position = await queues.put(chat_id, file=file_path)
