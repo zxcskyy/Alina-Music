@@ -103,7 +103,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-async def generate_cover(requested_by, title, views, duration, ctitle):
+async def generate_cover(requested_by, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
             if resp.status == 200:
@@ -120,7 +120,7 @@ async def generate_cover(requested_by, title, views, duration, ctitle):
     img = Image.open("temp.png")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("etc/Roboto-Regular.ttf", 58)
-    draw.text((25, 535), f"Playing on {ctitle[:10]}", (0, 0, 0), font=font)
+    draw.text((25, 535), f"Playing here..", (0, 0, 0), font=font)
     font = ImageFont.truetype("etc/Roboto-Medium.ttf", 75)
     draw.text((25, 615),
         f"{title[:25]}..",
@@ -594,7 +594,7 @@ async def play(_, message: Message):
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         
         try:
-          results = YoutubeSearch(query, max_results=6).to_dict()
+          results = YoutubeSearch(query, max_results=5).to_dict()
         except:
           await lel.edit("**Give the title of the song to play!**")
         # Looks like hell. Aren't it?? FUCK OFF
@@ -603,8 +603,8 @@ async def play(_, message: Message):
             j = 0
             useer=user_name
 
-            emojilist = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣"]
-            while j < 6:
+            emojilist = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣"]
+            while j < 5:
                 toxxt += f"{emojilist[j]} [{results[j]['title']}](https://youtube.com{results[j]['url_suffix']})</b>\n"
                 toxxt += f" ├• **Duration** - {results[j]['duration']}\n"
                 toxxt += f" └• Empowered by Alina Robot\n\n"
@@ -620,7 +620,7 @@ async def play(_, message: Message):
                     [
                         InlineKeyboardButton("4️⃣", callback_data=f'plll 3|{query}|{user_id}'),
                         InlineKeyboardButton("5️⃣", callback_data=f'plll 4|{query}|{user_id}'), 
-                        InlineKeyboardButton("6️⃣", callback_data=f'plll 5|{query}|{user_id}'),
+          
                     ],
                     [
                         InlineKeyboardButton(text="🗑 ᴄʟᴏsᴇ", callback_data="cls")],
