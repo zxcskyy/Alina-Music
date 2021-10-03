@@ -103,7 +103,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-async def generate_cover(requested_by, title, views, duration, thumbnail):
+async def generate_cover(ctitle, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
             if resp.status == 200:
@@ -120,7 +120,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     img = Image.open("temp.png")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("etc/Roboto-Regular.ttf", 58)
-    draw.text((25, 535), f"Playing on".format(message.chat.title), (0, 0, 0), font=font)
+    draw.text((25, 535), f"Playing on {ctitle[:10]}", (0, 0, 0), font=font)
     font = ImageFont.truetype("etc/Roboto-Medium.ttf", 75)
     draw.text((25, 615),
         f"{title[:25]}..",
