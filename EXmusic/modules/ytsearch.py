@@ -44,7 +44,7 @@ async def ytsearch(_, message: Message):
         i = 0
         text = ""
         while i < 4:
-            text += f"Title - {results[i]['title']}\n"
+            text += f"• Title - {results[i]['title']}\n"
             text += f"Duration - {results[i]['duration']}\n"
             text += f"https://youtube.com{results[i]['url_suffix']}\n\n"
             i += 1
