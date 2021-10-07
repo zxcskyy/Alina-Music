@@ -439,15 +439,15 @@ async def play(_, message: Message):
     global que
     global useer
     if message.chat.id in DISABLED_GROUPS:
-        return    
-    lel = await message.reply("🔁 **Processing...**")
+        await message.reply("**Musicplayer is Disable!**\n\n» Ask admin for Enable the Musicplayer for this group.")
+        return
+    lel = await message.reply("🔁 **Processing..**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
-
     try:
         user = await USER.get_me()
     except:
-        user.first_name = "EXmusic"
+        user.first_name = "helper"
     usar = user
     wew = usar.id
     try:
@@ -465,39 +465,36 @@ async def play(_, message: Message):
                     invitelink = await _.export_chat_invite_link(chid)
                 except:
                     await lel.edit(
-                        "💡 To use me, I need to be an Administrator with the following **permissions:**\n\n» ❌ **Delete messages**\n» ❌ **Ban users**\n» ❌ **Add users**\n» ❌ **Manage voice chat**\n» ❌ **Add new admins**\n\nThen **type** /reload\n📣 **Updates Channel :** @EXProjects",
+                        "💡 To use me, I need to be an Administrator with the following **permissions:**\n\n» ❌ **Delete messages**\n» ❌ **Ban users**\n» ❌ **Add users**\n» ❌ **Manage voice chat**\n» ❌ **Add new admins**\n\nThen **type** /reload",
                     )
                     return
-
                 try:
                     await USER.join_chat(invitelink)
                     await USER.send_message(
-                        message.chat.id, "✅ I joined to play a song in **voice chat!**"
+                        message.chat.id, "🤖: i'm joined to this group for playing music on voice chat"
                     )
                     await lel.edit(
-                        "<b>✅ **Helper userbot has successfully joined this group**\n\n**Subs Channel**: @EXProjects\n\n**Group Support**: @EXGroupSupport</b>",
+                        "<b>💡 helper userbot joined your chat</b>",
                     )
-
                 except UserAlreadyParticipant:
                     pass
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<b>❎ **Flood Wait Error!**\n{user.first_name} tidak dapat bergabung dengan grup Anda karena banyaknya permintaan bergabung untuk userbot! Pastikan pengguna tidak dibanned dalam grup."
-                        f"\n\natau tambahkan @{ASSISTANT_NAME} secara manual ke grup anda dan coba lagi</b>",
+                        f"<b>⛑ Flood Wait Error ⛑\n{user.first_name} tidak dapat bergabung dengan grup Anda karena banyaknya permintaan bergabung untuk userbot! Pastikan pengguna tidak dibanned dalam grup."
+                        f"\n\nAtau tambahkan @{ASSISTANT_NAME} secara manual ke Grup Anda dan coba lagi</b>",
                     )
     try:
         await USER.get_chat(chid)
         # lmoa = await client.get_chat_member(chid,wew)
     except:
         await lel.edit(
-            f"<i>{user.first_name} was banned in this group, ask admin to unban @{ASSISTANT_NAME}</i>"
+            f"<i>{user.first_name} was banned in this group, ask admin to unban @{ASSISTANT_NAME} manually.</i>"
         )
         return
-    text_links = None
-    #await lel.edit("🔁 **Processing** sound..")
+    text_links=None
     if message.reply_to_message:
-        if message.reply_to_message.audio:
+        if message.reply_to_message.audio or message.reply_to_message.voice:
             pass
         entities = []
         toxt = message.reply_to_message.text or message.reply_to_message.caption
@@ -505,10 +502,12 @@ async def play(_, message: Message):
             entities = message.reply_to_message.entities + entities
         elif message.reply_to_message.caption_entities:
             entities = message.reply_to_message.entities + entities
-        urls = [entity for entity in entities if entity.type == "url"]
-        text_links = [entity for entity in entities if entity.type == "text_link"]
+        urls = [entity for entity in entities if entity.type == 'url']
+        text_links = [
+            entity for entity in entities if entity.type == 'text_link'
+        ]
     else:
-        urls = None
+        urls=None
     if text_links:
         urls = True
     user_id = message.from_user.id
@@ -522,51 +521,48 @@ async def play(_, message: Message):
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
             raise DurationLimitError(
-                f"**lagu dengan durasi lebih dari** `{DURATION_LIMIT}` **menit dilarang untuk diputar!**"
+                f"❌ **music with duration more than** `{DURATION_LIMIT}` **minutes, can't play !**"
             )
         keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🖱️ ᴍᴇɴᴜ", callback_data="menu"),
-                    InlineKeyboardButton("🗑 ᴄʟᴏsᴇ", callback_data="cls"),
-                ],[
-                    InlineKeyboardButton("⏺️ ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/EXProjects")
+                    InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url=f"https://t.me/{UPDATES_CHANNEL}"),
+                    InlineKeyboardButton(text="ᴄʟᴏsᴇ", callback_data="closed")
                 ],
             ]
         )
         file_name = get_file_name(audio)
         title = file_name
-        thumb_name = "https://telegra.ph/file/7395642037554c52798a9.jpg"
+        thumb_name = "https://telegra.ph/file/fa2cdb8a14a26950da711.png"
         thumbnail = thumb_name
         duration = round(audio.duration / 60)
         views = "Locally added"
         requested_by = message.from_user.first_name
-        await generate_cover(requested_by, title, views, duration, thumbnail)
-        file_path = await convert(
+        await generate_cover(title, thumbnail)
+        file_path = await converter.convert(
             (await message.reply_to_message.download(file_name))
             if not path.isfile(path.join("downloads", file_name))
             else file_name
         )
     elif urls:
         query = toxt
-        #await lel.edit("🔁 **Processing...**")
+        #await lel.edit("🔎 **Finding song**")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
             url = f"https://youtube.com{results[0]['url_suffix']}"
             # print(results)
-            title = results[0]["title"][:25]
+            title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
-            thumb_name = f"thumb{title}.jpg"
+            thumb_name = f"{title}.jpg"
             thumb = requests.get(thumbnail, allow_redirects=True)
             open(thumb_name, "wb").write(thumb.content)
             duration = results[0]["duration"]
             results[0]["url_suffix"]
             views = results[0]["views"]
-
         except Exception as e:
             await lel.edit(
-                "❎ **Song not found!** coba berikan dengan judul yang benar, contoh /play desah mia khalifa"
+                "❌ **song not found!** please enter with the correct song title."
             )
             print(str(e))
             return
@@ -575,16 +571,14 @@ async def play(_, message: Message):
         keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🖱️ ᴍᴇɴᴜ", callback_data="menu"),
-                    InlineKeyboardButton("🗑 ᴄʟᴏsᴇ", callback_data="cls"),
-                ],[
-                    InlineKeyboardButton("⏺️ ᴄʜᴀɴɴ", url=f"https://t.me/EXProjects")
+                    InlineKeyboardButton("ᴜᴘᴅᴀᴛᴇs", url=f"https://t.me/{UPDATES_CHANNEL}"),
+                    InlineKeyboardButton(text="ᴄʟᴏsᴇ", callback_data="closed")
                 ],
             ]
         )
         requested_by = message.from_user.first_name
-        await generate_cover(requested_by, title, views, duration, thumbnail)
-        file_path = await convert(youtube.download(url))        
+        await generate_cover(title, thumbnail)
+        file_path = await converter.convert(youtube.download(url))        
     else:
         query = ""
         for i in message.command[1:]:
