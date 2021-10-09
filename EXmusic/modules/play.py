@@ -233,7 +233,7 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
-            f"✔️ **Successfully** activate the music player in **{message.chat.title}**\n**Enabled by admin :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
+            f"**Successfully** activate the music player in {message.chat.title}\n\n**Enabled by admin :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
@@ -241,12 +241,12 @@ async def hfmm(_, message):
         
         if message.chat.id in DISABLED_GROUPS:
             await lel.edit(
-            f"❗ **The music player** has been turned off in **{message.chat.title}**"
+            f"**The music player** has been turned off in {message.chat.title}"
         )
             return
         DISABLED_GROUPS.append(message.chat.id)
         await lel.edit(
-            f"✔️ **Successfully** disable the music player in **{message.chat.title}**\n**Disabled by admin :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
+            f"**Successfully** disable the music player in {message.chat.title}\n\n**Disabled by admin :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
         )
     else:
         await message.reply_text(
