@@ -219,7 +219,7 @@ async def hfmm(_, message):
         return
     if len(message.command) != 2:
         await message.reply_text(
-            "💡**I only recognize**\n/musicplayer on\n/musicplayer off"
+            "💡 Use below command for music player status.\n`/musicplayer on`\n`/musicplayer off`"
         )
         return
     status = message.text.split(None, 1)[1]
@@ -227,22 +227,22 @@ async def hfmm(_, message):
     if status == "ON" or status == "on" or status == "On":
         lel = await message.reply("Processing..")
         if not message.chat.id in DISABLED_GROUPS:
-            await lel.edit("✅ **Music player is successfully active in this group**")
+            await lel.edit("✅ **Music player"* is successfully active in **{message.chat.title}**")
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
-            f"**Music player** successfully activated {message.chat.title}\n**Activated by :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
+            f"✔️ **Successfully** activate the music player in **{message.chat.title}**\n**Enabled by admin :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
         lel = await message.reply("Processing...")
         
         if message.chat.id in DISABLED_GROUPS:
-            await lel.edit("❎ **The music player has been turned off in this group**")
+            await lel.edit("❗ **The music player** has been turned off in **{message.chat.title}**")
             return
         DISABLED_GROUPS.append(message.chat.id)
         await lel.edit(
-            f"**Music player** disabled successfully.\n**Disabled by :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
+            f"✔️ **Successfully** disable the music player in **{message.chat.title}**\n**Disabled by admin :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
         )
     else:
         await message.reply_text(
@@ -439,7 +439,7 @@ async def play(_, message: Message):
     global que
     global useer
     if message.chat.id in DISABLED_GROUPS:
-        await message.reply("**Musicplayer is Disable!**\n\n» Ask admin for Enable the Musicplayer for this group.")
+        await message.reply("❗ **Music player** status here is disabled!\n ask admin to reactivate the music player with the **command** `/musicplayer on`")
         return
     lel = await message.reply("🔁 **Processing..**")
     administrators = await get_administrators(message.chat)
