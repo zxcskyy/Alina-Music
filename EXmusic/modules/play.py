@@ -231,7 +231,7 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
-            f"**Music player** successfully activated **{}**\n**Activated by :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`".format(chat.title)
+            f"**Music player** successfully activated {message.chat.title}\n**Activated by :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
