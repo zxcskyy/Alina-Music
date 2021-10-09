@@ -228,7 +228,7 @@ async def hfmm(_, message):
         lel = await message.reply("Processing..")
         if not message.chat.id in DISABLED_GROUPS:
             await lel.edit(
-            f"✅ **Music player"* is successfully active in **{message.chat.title}**"
+            f"✅ **Music player** is successfully active in **{message.chat.title}**"
         )
             return
         DISABLED_GROUPS.remove(message.chat.id)
