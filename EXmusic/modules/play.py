@@ -219,7 +219,7 @@ async def hfmm(_, message):
         return
     if len(message.command) != 2:
         await message.reply_text(
-            "💡**I only recognize** /musicplayer on and /musicplayer off"
+            "💡**I only recognize**\n/musicplayer on\n/musicplayer off"
         )
         return
     status = message.text.split(None, 1)[1]
@@ -231,7 +231,7 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
-            f"🟢 **Music player** activated successfully for user in chat {message.chat.id}"
+            f"**Music player** successfully activated.\n**Activated by :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
@@ -242,7 +242,7 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.append(message.chat.id)
         await lel.edit(
-            f"🔴 **Music player** disabled successfully for user in chat {message.chat.id}"
+            f"**Music player** disabled successfully.\n**Disabled by :** {message.from_user.mention()}\n**Chat id :** `{message.chat.id}`"
         )
     else:
         await message.reply_text(
@@ -609,9 +609,9 @@ async def play(_, message: Message):
                     [
                         InlineKeyboardButton("1️⃣", callback_data=f'plll 0|{query}|{user_id}'),
                         InlineKeyboardButton("2️⃣", callback_data=f'plll 1|{query}|{user_id}'),
+                        InlineKeyboardButton("3️⃣", callback_data=f'plll 2|{query}|{user_id}'),
                     ],
                     [
-                        InlineKeyboardButton("3️⃣", callback_data=f'plll 2|{query}|{user_id}'),
                         InlineKeyboardButton("4️⃣", callback_data=f'plll 3|{query}|{user_id}'),
                         InlineKeyboardButton("5️⃣", callback_data=f'plll 4|{query}|{user_id}'), 
           
@@ -619,15 +619,11 @@ async def play(_, message: Message):
                     [
                         InlineKeyboardButton(text="🗑 ᴄʟᴏsᴇ", callback_data="cls")],
                 ]
-            )
-     
-            await message.reply_photo(
-                photo="https://telegra.ph/file/8d2d2b3c0b6bd9fc3409e.jpg",
-                caption=toxxt, reply_markup=koyboard, 
-            )
-            await lel.delete()
+            )     
+            await lel.edit(toxxt,reply_markup=koyboard,disable_web_page_preview=True)
+            # kontol
             return
-            # Returning to pornhub
+            # Mia khalifa is the best
         except:
             #await lel.edit("🤖 **There are not enough results to choose from, start playing right away.**")
                         
@@ -862,7 +858,7 @@ async def lol_cb(b, cb):
     if cb.from_user.id != useer_id:
         await cb.answer("you are not people who requested this song !", show_alert=True)
         return
-    #await cb.message.edit("**Connecting to voice chat...**")
+    await cb.message.edit("**Connecting** to voice chat...")
     x=int(x)
     try:
         useer_name = cb.message.reply_to_message.from_user.first_name
